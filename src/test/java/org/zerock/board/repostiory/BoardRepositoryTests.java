@@ -88,5 +88,27 @@ public class BoardRepositoryTests {
         System.out.println(arr[1]);
         System.out.println(arr[2]);
     }
+
+    @Test
+    public void testSearch1(){
+        boardRepository.search1();
+    }
+
+    @Test
+    public void testSearchPage(){
+
+        Pageable pageable = PageRequest.of(0,10,Sort.by("bno").descending()
+                .and(Sort.by("title").ascending()));
+
+        Page<Object[]> result = boardRepository.searchPage("t","1",pageable);
+
+        result.get().forEach(row->{
+            Object[]arr=(Object[])row;
+            System.out.println(Arrays.toString(arr));
+        });
+
+    }
+
+
 }
 
