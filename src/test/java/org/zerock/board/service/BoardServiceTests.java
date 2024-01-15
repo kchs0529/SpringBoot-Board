@@ -3,7 +3,6 @@ package org.zerock.board.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import org.zerock.board.dto.BoardDTO;
 import org.zerock.board.dto.PageRequestDTO;
 import org.zerock.board.dto.PageResultDTO;
@@ -16,9 +15,10 @@ public class BoardServiceTests {
 
     @Test
     public void testRegister(){
+
         BoardDTO dto = BoardDTO.builder()
                 .title("Test..")
-                .content("Test..")
+                .content("Test...")
                 .writerEmail("user55@aaa.com")
                 .build();
 
@@ -32,19 +32,19 @@ public class BoardServiceTests {
 
         //System.out.println(result.getDtoList());
 
-        for(BoardDTO boardDTO : result.getDtoList()){
+        for (BoardDTO boardDTO : result.getDtoList()) {
             System.out.println(boardDTO);
         }
     }
 
     @Test
     public void testGet(){
-        BoardDTO result = boardService.get(100L);
+        Long bno = 99L;
 
-        System.out.println(result);
+        BoardDTO boardDTO = boardService.get(bno);
+        System.out.println(boardDTO);
     }
 
-    @Transactional
     @Test
     public void testRemove(){
         Long bno = 1L;
@@ -53,13 +53,14 @@ public class BoardServiceTests {
 
     @Test
     public void testModify(){
-        Long bno = 2L;
+
         BoardDTO boardDTO = BoardDTO.builder()
-                .bno(bno)
-                .title("수정 제목")
-                .content("수정 내용")
+                .bno(2L)
+                .title("제목 변경합니다.2")
+                .content("내용 변경합니다.2")
                 .build();
 
         boardService.modify(boardDTO);
     }
+
 }

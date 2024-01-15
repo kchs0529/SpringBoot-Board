@@ -5,7 +5,6 @@
 
     <th:block th:fragment="content">
 
-
         <h1 class="mt-4">
             Board Modify Page
         </h1>
@@ -38,18 +37,18 @@
                 <label >RegDate</label>
                 <input type="text" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
             </div>
-
+S
             <div class="form-group">
                 <label >ModDate</label>
                 <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
             </div>
         </form>
 
-        <button type="button" class="btn btn-primary modifyBtn">수정하기</button>
+        <button type="button" class="btn btn-primary modifyBtn">Modify</button>
 
-        <button type="button" class="btn btn-info listBtn">목록으로</button>
+        <button type="button" class="btn btn-info listBtn">List</button>
 
-        <button type="button" class="btn btn-danger removeBtn">삭제하기</button>
+        <button type="button" class="btn btn-danger removeBtn">Remove</button>
 
         <script th:inline="javascript">
 
@@ -65,30 +64,30 @@
 
             });
 
-            $(".modifyBtn").click(function(){
+            $(".modifyBtn").click(function() {
 
                 if(!confirm("수정하시겠습니까?")){
-                 return;
+                    return ;
                 }
+
                 actionForm
                     .attr("action", "/board/modify")
-                    .attr("method","post");
-
-                actionForm.submit();
-
+                    .attr("method","post")
+                    .submit();
             });
 
-            $(".listBtn").click(function(){
+            $(".listBtn").click(function() {
 
-                 var page=$("input[name='page']");
+                var page = $("input[name='page']");
 
-                 actionForm.empty();
-                 actionForm.append(page);
+                actionForm.empty();
 
-                 actionForm.attr("action","/board/list").attr("method","get").submit();
+                actionForm.append(page);
 
-                actionForm.submit();
-
+                actionForm
+                    .attr("action","/board/list")
+                    .attr("method","get")
+                    .submit()
             });
 
         </script>

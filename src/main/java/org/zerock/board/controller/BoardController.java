@@ -19,46 +19,50 @@ import org.zerock.board.service.BoardService;
 @RequiredArgsConstructor
 public class BoardController {
 
-    private  final BoardService boardService;
+    private final BoardService boardService;
 
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model){
 
-        log.info("List........."+pageRequestDTO);
+        log.info("list........." + pageRequestDTO);
 
         model.addAttribute("result",boardService.getList(pageRequestDTO));
-
     }
 
     @GetMapping("/register")
     public void register(){
-        log.info("register get....");
+        log.info("register get.... ");
     }
 
     @PostMapping("/register")
     public String registerPost(BoardDTO dto, RedirectAttributes redirectAttributes){
 
-        log.info("dto...." + dto);
+        log.info("dto..." + dto);
 
         Long bno = boardService.register(dto);
 
-        log.info(bno);
+        log.info("BNO: " + bno);
 
-        redirectAttributes.addFlashAttribute("msg",bno);
+        redirectAttributes.addFlashAttribute("msg", bno);
+
         return "redirect:/board/list";
     }
 
     @GetMapping({"/read","/modify"})
-    public void read(Long bno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model){
-        log.info("bno...." + bno);
+    public void read(@ModelAttribute("requestDTO") PageRequestDTO pageRequestDTO, Long bno, Model model){
+        log.info("bno..." + bno);
+
         BoardDTO boardDTO = boardService.get(bno);
+
         log.info(boardDTO);
+
         model.addAttribute("dto",boardDTO);
     }
 
     @PostMapping("/remove")
     public String remove(Long bno,RedirectAttributes redirectAttributes){
-        log.info("bno : "+bno);
+
+        log.info("bno: " + bno);
         boardService.removeWithReplies(bno);
         redirectAttributes.addFlashAttribute("msg",bno);
 
@@ -66,18 +70,21 @@ public class BoardController {
     }
 
     @PostMapping("/modify")
-    public String modify(BoardDTO dto,@ModelAttribute("requestDTO") PageRequestDTO requestDTO,
+    public String modify(BoardDTO dto,
+                         @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
                          RedirectAttributes redirectAttributes){
-        log.info("post modify.....................");
-        log.info("dto:"+dto);
+
+        log.info("post modify.........................................");
+        log.info("dto: " + dto);
 
         boardService.modify(dto);
 
-        //다른 컨트롤러에 값을 넘겨주기 위해 사용
-        redirectAttributes.addAttribute("bno",dto.getBno());
-        redirectAttributes.addAttribute("page",requestDTO.getPage());
 
+        redirectAttributes.addAttribute("page",requestDTO.getPage());
+        redirectAttributes.addAttribute("bno",dto.getBno());
 
         return "redirect:/board/read";
     }
+
+
 }

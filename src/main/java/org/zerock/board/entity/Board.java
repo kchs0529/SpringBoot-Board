@@ -3,17 +3,16 @@ package org.zerock.board.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.stream.Stream;
-
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = "writer")//writer을 제외한다.
+@ToString(exclude = "writer")
 public class Board extends BaseEntity{
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bno;
 
     private String title;
@@ -21,14 +20,14 @@ public class Board extends BaseEntity{
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member writer; //연관 관계 지정-> Member.email = Board.email
+    private Member writer;    //연관관계지정 -> Member.email = Board.email
 
     public void changeTitle(String title){
-        this.title =title;
+        this.title = title;
     }
 
-    public void changContent(String content){
-        this.content =content;
+    public void changeContent(String content){
+        this.content = content;
     }
 
 }
