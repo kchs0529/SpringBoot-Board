@@ -73,7 +73,7 @@
             <li class="page-item " th:if="${result.prev}">
                 <a class="page-link" th:href="@{/board/list(page= ${result.start -1},
                     type=${pageRequestDTO.type} ,
-                    keyword = ${pageRequestDTO.keyword} ) }" tabindex="-1">Previous</a>
+                    keyword = ${pageRequestDTO.keyword} ) }" tabindex="-1">이전</a>
             </li>
 
             <li th:class=" 'page-item ' + ${result.page == page?'active':''} " th:each="page: ${result.pageList}">
@@ -87,7 +87,7 @@
             <li class="page-item" th:if="${result.next}">
                 <a class="page-link" th:href="@{/board/list(page= ${result.end + 1} ,
                     type=${pageRequestDTO.type} ,
-                    keyword = ${pageRequestDTO.keyword} )}">Next</a>
+                    keyword = ${pageRequestDTO.keyword} )}">다음</a>
             </li>
 
         </ul>

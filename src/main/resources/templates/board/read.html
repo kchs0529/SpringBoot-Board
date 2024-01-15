@@ -45,12 +45,12 @@
                     page=${requestDTO.page},
                     type=${requestDTO.type}, keyword =${requestDTO.keyword}
         )}">
-            <button type="button" class="btn btn-primary">Modify</button>
+            <button type="button" class="btn btn-primary">수정하기</button>
         </a>
         <a th:href="@{/board/list(page=${requestDTO.page},
                     type=${requestDTO.type}, keyword =${requestDTO.keyword}
         )}">
-            <button type="button" class="btn btn-info">List</button>
+            <button type="button" class="btn btn-info">목록으로</button>
         </a>
 
         <div class="mt-4">
@@ -93,10 +93,10 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger replyRemove">Remove</button>
-                        <button type="button" class="btn btn-warning replyModify">Modify</button>
-                        <button type="button" class="btn btn-primary replySave">Save</button>
-                        <button type="button" class="btn btn-outline-secondary replyClose" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger replyRemove">삭제하기</button>
+                        <button type="button" class="btn btn-warning replyModify">수정하기</button>
+                        <button type="button" class="btn btn-primary replySave">저장하기</button>
+                        <button type="button" class="btn btn-outline-secondary replyClose" data-dismiss="modal">닫기</button>
                     </div>
 
                 </div>
@@ -231,10 +231,43 @@
                 });
 
 
+                $(".replyModify").click(function () {
+
+                    var rno = $("input[name='rno']").val();
+
+                    var reply = {
+                        rno:rno,
+                        bno:bno,
+                        text: $('input[name="replyText"]').val(),
+                        replyer: $('input[name="replyer"]').val()
+                    }
+
+                    $.ajax({
+                        url:'/replies/' + rno,
+                        method:'put',
+                        data: JSON.stringify(reply),
+                        contentType: 'application/json; charset=utf-8',
+                        success:function(result){
+                            console.log("result : " + result);
+
+                            console.log("RESULT: " + result);
+
+                            if(result ==='success'){
+                                alert("댓글이 수정되었습니다");
+                                modal.modal('hide');
+                                loadJSONData();
+                            }
+                        }
+                    });
+
+                });
+
+
             });   //document end
 
         </script>
 
-        </th:block>
+
+    </th:block>
 
     </th:block>
